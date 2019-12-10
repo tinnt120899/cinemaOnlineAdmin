@@ -1,0 +1,134 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card-box">
+        <div class="row">
+          <!-- List Usergroup-->
+          <div class="col-lg-8">
+            <h4 class="m-t-0 header-title mb-2 d-none d-md-block"><b>{{title}}</b></h4>
+
+            <div class="row mb-2">
+              <div class="col-sm-12 col-md-6 d-none d-md-block">
+                <div class="dataTables_length" id="tickets-table_length"><label
+                  class="d-inline-flex align-items-center">Hiện
+                  <select name="tickets-table_length" aria-controls="tickets-table" name="pageSize" (change)="onPageSizeChange($event.target.value)"
+                          class="custom-select custom-select-sm form-control form-control-sm mx-2">
+                    <option [value]="10">10</option>
+                    <option [value]="25">25</option>
+                    <option [value]="50">50</option>
+                    <option [value]="100">100</option>
+                  </select> dòng</label></div>
+              </div>
+              <!-- Search -->
+              <div class="col-sm-12 col-md-6">
+                <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
+                  class="d-inline-flex align-items-center">Tìm&nbsp;kiếm
+                  <input type="text" name="searchTerm" class="form-control form-control-sm fw-300 ml-2"
+                         aria-controls="tickets-table" placeholder="Tìm suất chiếu" #searchInput>
+                </label></div>
+              </div>
+              <!-- End search -->
+            </div>
+            <!-- Table -->
+            <div class="table-responsive my-table">
+              <table class="table table-centered table-sm mb-0">
+                <thead class="font-13 bg-light text-muted">
+                <tr>
+                  <th class="font-weight-medium">{{idSuatChieu}}</th>
+                  <th class="font-weight-medium ">{{suatChieu}}</th>
+                  <th class="m-w-35"></th>
+                  <th class="m-w-35"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of categoryList">
+                  <td class="pl-2">{{item.idSuatChieu}}</td>
+                  <td>{{item.suatChieu}}</td>
+                  <td>
+                    <div ngbDropdown class="d-inline-block" placement="bottom-right">
+                      <a href="javascript:void(0);" ngbDropdownToggle id="userAction-a"><i
+                        class="font-16 fas fa-list text-primary"></i></a>
+                      <div class="dropdown-menu dropdown-menu-right dropdown-arrow dropdown-menu-lg" ngbDropdownMenu
+                           aria-labelledby="userAction">
+                        <a ngbDropdownItem href="javascript:void(0);" class="dropdown-item-table mb-1"
+                           (click)="getInfo(item.idSuatChieu, item.suatChieu, item.idSeatMap, item._id)">
+                            <span class="notify-details-table"> <i
+                              class="notify-icon-table bg-primary fas fa-pencil-alt font-12"></i> Cập nhật thông
+                              tin</span>
+                        </a>
+                        <a ngbDropdownItem href="javascript:void(0);" class="dropdown-item-table mb-1"
+                           (click)="deleteItem(item._id, item.heThongRap)">
+                            <span class="notify-details-table"> <i
+                              class="notify-icon-table bg-danger fas fa-trash-alt font-12"></i> Xóa thông tin</span>
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="row justify-content-md-between align-items-md-center">
+              <div class="col-6 mt-2 mt-md-0 d-none d-md-block">
+                Hiển thị {{ totalRecords === 0 ? 0 : (pageNum - 1) * pageSize + 1 }} - {{ (pageNum - 1) * pageSize + categoryList?.length }} trên {{ totalRecords }}
+              </div> <!-- end col-->
+              <div class="col-6">
+                <div class="text-md-right float-md-right mt-2">
+                  <ngb-pagination [collectionSize]="totalRecords" (pageChange)="onPageChange($event)" [(page)]="pageNum"
+                                  [pageSize]="pageSize" [maxSize]="maxSize" [rotate]="true">
+                  </ngb-pagination>
+                  <!--Pagination-->
+                </div>
+              </div> <!-- end col-->
+            </div>
+            <!-- End Paging -->
+          </div>
+          <!-- End List Usergroup-->
+          <!-- Form Usergroup-->
+          <div class="col-lg-4 mt-xl-0 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2">
+            <h4 class="m-t-0 header-title mb-3"><b>{{nameBtnSubmit + title}}</b></h4>
+
+            <div class="row">
+              <div class="col-12">
+                <form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+                  <div class="form-group row">
+                    <label for="Org" class="col-xl-4 col-form-label">{{idSuatChieu}}</label>
+                    <div class="col-xl-8">
+                      <input type="text" class="form-control" id="Org" placeholder="{{idSuatChieu}}" formControlName="idSuatChieu"
+                             [ngClass]="{ 'is-invalid': submitted && f.idSuatChieu.errors }">
+                      <div *ngIf="submitted && f.idSuatChieu.errors" class="invalid-feedback">
+                        <div *ngIf="f.idSuatChieu.errors.required">{{idSuatChieu + ' '}} không được trống</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="Org1" class="col-xl-4  col-form-label">{{suatChieu}}<span class="text-danger">*</span></label>
+                    <div class="col-xl-8">
+                      <input type="text" class="form-control" id="Org1" placeholder="{{suatChieu}}" formControlName="ngayChieu"
+                             [ngClass]="{ 'is-invalid': submitted && f.suatChieu.errors }">
+                      <div *ngIf="submitted && f.suatChieu.errors" class="invalid-feedback">
+                        <div *ngIf="f.suatChieu.errors.required">{{suatChieu + ' '}} không được trống</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label for="txtsymbol" class="col-xl-4 col-form-label"></label>
+                    <div class="col-xl-8">
+                      <button class="btn btn-success waves-effect waves-light"> <i
+                        class="fe-save mr-1"></i><span>{{nameBtnSubmit}}</span> </button>
+                      <button class="btn btn-secondary my-btn-re" type="reset" (click)="onReset()"><i class="fas fa-sync-alt"></i><span> Hủy </span></button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- End form Usergroup-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

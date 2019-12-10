@@ -5,6 +5,8 @@ import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Theaters } from './theaters';
 import { TheatersService } from './theaters.service';
+import { ToasterService } from 'src/app/toaster.service';
+import { GlobalsService } from 'src/app/globals.service';
 @Component({
   selector: 'app-theaters',
   templateUrl: './theaters.component.html',
@@ -12,6 +14,8 @@ import { TheatersService } from './theaters.service';
 })
 export class TheatersComponent implements OnInit, AfterViewInit {
   title = ' Hệ thống rạp';
+  danhSachTinhThanh = this.globals.listCity;
+
 
   @ViewChild('searchInput', {static: false}) searchInput: ElementRef;
 
@@ -33,16 +37,19 @@ export class TheatersComponent implements OnInit, AfterViewInit {
   // modal
   id: string;
   nameList: string;
+  href: string;
 
-  ma = 'Id';
+  ma = 'Mã';
   ten = 'Hệ thống rạp';
-  tinhThanh = 'Tỉnh thành';
+  tinhThanh = 'Tỉnh Thành';
   srcImage = 'Src image';
 
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: TheatersService
+    private service: TheatersService,
+    private toast: ToasterService,
+    private globals: GlobalsService
   ) { }
 
   ngOnInit() {
@@ -52,7 +59,7 @@ export class TheatersComponent implements OnInit, AfterViewInit {
     this.form = this.formBuilder.group({
       id: ['', Validators.required],
       nameList: ['', Validators.required],
-      tinhThanh: [''],
+      tinhThanh: ['', Validators.required],
       srcImage: [''],
       href: ['']
     });
@@ -77,35 +84,43 @@ export class TheatersComponent implements OnInit, AfterViewInit {
 
     if (this.updated === true) {
       this.id = formValue.id.replace(/\s\s+/g, ' ').trim();
+      this.href = this.id + 's';
       this.nameList = formValue.nameList.replace(/\s\s+/g, ' ').trim() ;
-      this.service.updateCategory(this.id, new Theaters(
-        formValue.tinhThanh, this.nameList, this.id , this.id+'s', formValue.srcImage))
+      this.service.updateCategory(this.ids, new Theaters(
+        formValue.tinhThanh, this.nameList, this.id , this.href, formValue.srcImage))
         .subscribe(res => {
-          // toast
+          this.toast.Success('Chúc mừng', 'Cập nhật thành công !!!');
           if (res !== null) {
             this.onReset();
           }
-        });
+        },
+          (err) => {
+            this.toast.Error('Lỗi xảy ra', 'Mã hoặc tên bị trùng !!!');
+          });
       setTimeout(() => {
         this.onPageSizeChange(this.pageSize);
       }, 200);
     } else if (this.form.valid) {
       this.id = formValue.id.replace(/\s\s+/g, ' ').trim();
+      this.href = this.id + 's';
       this.nameList = formValue.nameList.replace(/\s\s+/g, ' ').trim() ;
       this.service.createNewCategory(new Theaters(
-        formValue.tinhThanh, this.nameList, this.id , this.id+'s', formValue.srcImage))
+        formValue.tinhThanh, this.nameList, this.id , this.href, formValue.srcImage))
         .subscribe(res => {
           this.categoryList.push(res);
           this.totalRecords++;
-          // toast
+          this.toast.Success('Chúc mừng', 'Tạo mới thành công!!!');
           if (res !== null) {
             this.onReset();
           }
+        },
+          (err) => {
+            this.toast.Error('Lỗi xảy ra', 'Mã hoặc tên bị trùng !!!');
         });
 
 
     } else if (this.form.invalid) {
-      // toast
+      return this.toast.Error('Lỗi dữ liệu', 'Vui lòng không được bỏ trống trường có dấu *');
     }
 
   }

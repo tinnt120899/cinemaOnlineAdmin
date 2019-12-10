@@ -25,7 +25,7 @@
                 <div id="tickets-table_filter" class="dataTables_filter text-md-right"><label
                   class="d-inline-flex align-items-center">Tìm&nbsp;kiếm
                   <input type="text" name="searchTerm" class="form-control form-control-sm fw-300 ml-2"
-                         aria-controls="tickets-table" placeholder="Tên hiển thị người dùng" #searchInput>
+                         aria-controls="tickets-table" placeholder="Tìm hệ thống rạp" #searchInput>
                 </label></div>
               </div>
               <!-- End search -->
@@ -89,7 +89,6 @@
           </div>
           <!-- End List Usergroup-->
           <!-- Form Usergroup-->
-          <!--          <div class="col-lg-1"></div>-->
           <div class="col-lg-4 mt-xl-0 mt-lg-2 mt-md-2 mt-sm-2 mt-xs-2">
             <h4 class="m-t-0 header-title mb-3"><b>{{nameBtnSubmit + title}}</b></h4>
 
@@ -121,10 +120,13 @@
                   </div>
 
                   <div class="form-group row">
-                    <label for="Org1" class="col-xl-4 col-form-label">{{tinhThanh}}</label>
+                    <label for="Org1" class="col-xl-4 col-form-label">{{tinhThanh}}<span class="text-danger">*</span></label>
                     <div class="col-xl-8">
-                      <textarea rows="4" type="text" class="form-control" id="Org1" placeholder="{{tinhThanh}}" formControlName="tinhThanh"></textarea>
-                    </div>
+                      <select class="form-control" id="Org1" formControlName="tinhThanh" (change)='$event.target.value'>
+                        <option>Chọn {{'' + tinhThanh}}</option>
+                        <option *ngFor="let item of danhSachTinhThanh" >{{item}}</option>
+                      </select>
+                  </div>
                   </div>
 
                   <div class="form-group row">

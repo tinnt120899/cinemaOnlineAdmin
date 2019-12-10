@@ -27,6 +27,9 @@ import {NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule} 
 import {HttpClientModule} from '@angular/common/http';
 import {EditorModule} from '@tinymce/tinymce-angular';
 import {TheatersManageModule} from './demo/pages/theaters-manage/theaters-manage.module';
+import { ToasterService } from './toaster.service';
+import { GlobalsService } from './globals.service';
+import { FilmManageModule } from './demo/pages/film-managa/film-manage.module';
 
 @NgModule({
   declarations: [
@@ -56,9 +59,10 @@ import {TheatersManageModule} from './demo/pages/theaters-manage/theaters-manage
     NgbTabsetModule,
     HttpClientModule,
     EditorModule,
-    TheatersManageModule
+    TheatersManageModule,
+    FilmManageModule
   ],
-  providers: [NavigationItem],
+  providers: [NavigationItem, ToasterService, GlobalsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

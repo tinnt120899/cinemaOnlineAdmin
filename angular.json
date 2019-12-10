@@ -29,10 +29,17 @@
               "src/fake-data"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/scss/bootstrap.scss",
+              "src/assets/scss/icons.scss",
+              "src/assets/scss/custom/jquery.nestable.css",
+              "src/assets/scss/custom/toastr.min.css",
+              "src/assets/scss/my-custom/my-style.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/jquery.nestable.js",
+              "src/assets/js/toastr.min.js"
             ]
           },
           "configurations": {

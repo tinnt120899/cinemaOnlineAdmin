@@ -10,8 +10,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard/analytics',
+        redirectTo: 'auth/signin',
         pathMatch: 'full'
+      },
+      {
+        path: 'auth',
+        loadChildren: () => import('./demo/pages/authentication/authentication.module').then(module => module.AuthenticationModule)
       },
       {
         path: 'dashboard',
@@ -48,6 +52,10 @@ const routes: Routes = [
       {
         path: 'theaters',
         loadChildren: () => import('./demo/pages/theaters-manage/theaters-manage.module').then(module => module.TheatersManageModule)
+      },
+      {
+        path: 'film',
+        loadChildren: () => import('./demo/pages/film-managa/film-manage.module').then(module => module.FilmManageModule)
       }
     ]
   },

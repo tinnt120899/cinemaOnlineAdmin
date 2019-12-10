@@ -5,6 +5,7 @@ import {NewsCreate} from './news-create';
 import {fromEvent} from 'rxjs';
 import {debounceTime, distinctUntilChanged, tap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { ToasterService } from 'src/app/toaster.service';
 @Component({
   selector: 'app-news',
   templateUrl: './news-create.component.html',
@@ -46,7 +47,8 @@ export class NewsCreateComponent implements OnInit, AfterViewInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private service: NewsCreateService
+        private service: NewsCreateService,
+        private toast: ToasterService
     ) { }
 
     ngOnInit() {
@@ -86,7 +88,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit {
            this.service.updateCategory(this.id, new NewsCreate(
              this.maTinTuc, this.tieuDe, formValue.tieuDePhu, formValue.srcImage, formValue.ngayDang, formValue.noiDung))
                .subscribe(res => {
-                   // toast
+                 this.toast.Success('Chúc mừng', 'Cập nhật thành công !!!');
                    if (res !== null) {
                        this.onReset();
                    }
@@ -102,7 +104,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit {
              .subscribe(res => {
                this.categoryList.push(res);
                this.totalRecords++;
-               // toast
+               this.toast.Success('Chúc mừng', 'Tạo mới thành công!!!');
                if (res !== null) {
                    this.onReset();
                }
@@ -110,7 +112,7 @@ export class NewsCreateComponent implements OnInit, AfterViewInit {
 
 
        } else if (this.form.invalid) {
-          // toast
+          return this.toast.Error('Lỗi dữ liệu', 'Vui lòng không được bỏ trống trường có dấu *');
         }
 
     }

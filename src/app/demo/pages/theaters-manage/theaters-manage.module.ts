@@ -7,6 +7,7 @@ import {EditorModule} from '@tinymce/tinymce-angular';
 import {SharedModule} from '../../../theme/shared/shared.module';
 import { TheatersComponent } from './he-thong-rap/theaters.component';
 import { TheatersRoutingModule } from './theaters-routing.module';
+import { ListTheatersComponent } from './danh-sach-rap/list-theaters.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { TheatersRoutingModule } from './theaters-routing.module';
 
   ],
   declarations: [
-    TheatersComponent
+    TheatersComponent,
+    ListTheatersComponent
   ]
 })
 export class TheatersManageModule { }
