@@ -88,8 +88,7 @@ export class ListFilmComponent implements OnInit, AfterViewInit {
   onSubmit(formValue: ListFilm) {
 
     if (this.updated === true) {
-      this.service.updateCategory(this.ids, new ListFilm(
-        formValue.idPhim, formValue.tenPhim, formValue.thoiLuongChieu , formValue.srcImageSm, formValue.srcImageMd, formValue.srcImageLg, formValue.trangThai))
+      this.service.updateCategory(this.ids, new ListFilm(formValue.idPhim, formValue.tenPhim, formValue.thoiLuongChieu , formValue.srcImageSm, formValue.srcImageMd, formValue.srcImageLg, formValue.trangThai))
         .subscribe(res => {
             this.toast.Success('Chúc mừng', 'Cập nhật thành công !!!');
             if (res !== null) {
@@ -104,8 +103,7 @@ export class ListFilmComponent implements OnInit, AfterViewInit {
       }, 200);
     } else if (this.form.valid) {
 
-      this.service.createNewCategory(new ListFilm(
-        formValue.idPhim, formValue.tenPhim, formValue.thoiLuongChieu , formValue.srcImageSm, formValue.srcImageMd, formValue.srcImageLg, formValue.trangThai))
+      this.service.createNewCategory(new ListFilm(formValue.idPhim, formValue.tenPhim, formValue.thoiLuongChieu , formValue.srcImageSm, formValue.srcImageMd, formValue.srcImageLg, formValue.trangThai))
         .subscribe(res => {
             this.categoryList.push(res);
             this.totalRecords++;

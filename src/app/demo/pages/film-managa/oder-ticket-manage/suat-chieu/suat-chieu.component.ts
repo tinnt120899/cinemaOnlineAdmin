@@ -36,7 +36,7 @@ export class SuatChieuComponent implements OnInit, AfterViewInit {
   // modal
 
   idSuatChieu = 'Mã suất chiếu';
-  suatChieu = 'Ngày chiếu';
+  suatChieu = 'Suất chiếu';
   idSeatMap = 'Mã phim';
 
   ramdom: number;

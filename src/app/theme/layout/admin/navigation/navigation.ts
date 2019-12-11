@@ -209,21 +209,21 @@ const NavigationItems = [
             type: 'item',
             url: '/auth/signin',
             breadcrumbs: false
-          },
-          {
-            id: 'reset-password',
-            title: 'Reset Password',
-            type: 'item',
-            url: '/auth/reset-password',
-            breadcrumbs: false
-          },
-          {
-            id: 'change-password',
-            title: 'Change Password',
-            type: 'item',
-            url: '/auth/change-password',
-            breadcrumbs: false
           }
+          // {
+          //   id: 'reset-password',
+          //   title: 'Reset Password',
+          //   type: 'item',
+          //   url: '/auth/reset-password',
+          //   breadcrumbs: false
+          // },
+          // {
+          //   id: 'change-password',
+          //   title: 'Change Password',
+          //   type: 'item',
+          //   url: '/auth/change-password',
+          //   breadcrumbs: false
+          // }
         ]
       },
         // {
